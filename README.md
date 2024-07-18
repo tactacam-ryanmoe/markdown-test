@@ -45,7 +45,7 @@ flowchart TB
     end
 
     rcp-bsp --> SDK
-    SDK[(device specific SDK)]
+    SDK[(arch specific SDK)]
     
 
     SDK --> rcp-library
@@ -73,7 +73,7 @@ flowchart TB
 
     TACTACAMSDK --> rcp-camera
     subgraph rcp-camera
-        luckfox
+        vendor-SDK
     end
 
     rcp-camera --> BOOTABLE

@@ -38,25 +38,50 @@ flowchart TB
 
 ```mermaid
 flowchart TB
+
     subgraph rcp-bsp
         rcp-cache
         buildroot
     end
 
-    SDK[(SDK+Rootfs)]
     rcp-bsp --> SDK
-
-    subgraph rcp-library
-        rcp-core
-        rcp-display
-        rcp-media
-        rcp-sense
-    end
+    SDK[(device specific SDK)]
+    
 
     SDK --> rcp-library
+    subgraph rcp-library
+        subgraph rcp-core
+            coreso[.so]
+            coreexe[exec]
+        end
+        subgraph rcp-display
+            displayso[.so]
+            displayexe[exec]
+        end
+        subgraph rcp-media
+            mediaso[.so]
+            mediaexe[exec]
+        end
+        subgraph rcp-sense
+            senseso[.so]
+            senseexe[exec]
+        end
+    end
 
-    CPUIMG[(Bootable Image?)]
-    rcp-library --> CPUIMG
+    rcp-library --> TACTACAMSDK
+    TACTACAMSDK[(Tactacam SDK)]
+
+    TACTACAMSDK --> rcp-camera
+    subgraph rcp-camera
+        luckfox
+    end
+
+    rcp-camera --> BOOTABLE
+    BOOTABLE[(Bootable Image)]
+
+    
+
+
 
     subgraph rcp-mcu-silabs
         gecko-sdk

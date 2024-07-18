@@ -2,22 +2,4 @@
 
 > Test
 
-```plantuml:md-sample-sequence
-@startuml
-actor Foo123
-boundary Foo2
-control Foo3
-entity Foo4
-database Foo5
-collections Foo6
-Foo1 -> Foo2 : To boundary
-Foo1 -> Foo3 : To control
-Foo1 -> Foo4 : To entity
-Foo1 -> Foo5 : To database
-Foo1 -> Foo6 : To collections
-@enduml
-```
-
-![](./md-sample-sequence.svg)
-
-![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/tactacam-ryanmoe/markdown-test/main/test.puml
+![alternative text](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/tactacam-ryanmoe/markdown-test/main/test.puml)

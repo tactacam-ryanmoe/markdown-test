@@ -6,9 +6,9 @@ flowchart TB
         Makefile
     
         subgraph make1[~/make/]
-            make_env[env]
-            make_version[version]
-            make_custom[custom]
+            make_env[env.mk]
+            make_version[version.mk]
+            make_custom[custom.mk]
         end
 
         Makefile -- inc --> make_env
@@ -16,12 +16,12 @@ flowchart TB
         Makefile -. optional inc .-> make_custom
     
         subgraph board[~/board/rv1106g/make/]
-            board_env[env]
+            board_env[env.mk]
             subgraph source[./source/]
-                board_buildroot[buildroot]
-                board_cache[cache]
-                board_linux[linux]
-                board_uboot[uboot]
+                board_buildroot[buildroot.mk]
+                board_cache[cache.mk]
+                board_linux[linux.mk]
+                board_uboot[uboot.mk]
             end
         end
     

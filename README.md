@@ -5,13 +5,17 @@ flowchart TB
     subgraph rcp-bsp
         Makefile
     
-        subgraph make1[$root/make/]
+        subgraph make1[~/make/]
             make_env[env]
             make_version[version]
             make_custom[custom]
         end
+
+        Makefile -- inc --> make_env
+        Makefile -- inc--> make_version
+        Makefile -. optional inc .-> make_custom
     
-        subgraph board[$root/board/rv1106g/make/]
+        subgraph board[~/board/rv1106g/make/]
             board_env[env]
             subgraph source[./source/]
                 board_buildroot[buildroot]
@@ -20,10 +24,6 @@ flowchart TB
                 board_uboot[uboot]
             end
         end
-    
-        Makefile -- inc --> make_env
-        Makefile -- inc--> make_version
-        Makefile -. optional inc .-> make_custom
     
         make_env -- inc --> board_env
     

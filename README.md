@@ -27,12 +27,55 @@ flowchart TB
     
         make_env -- inc --> board_env
     
-        board_env -- inc --> board_buildroot
-        board_env -- inc --> board_cache
-        board_env -- inc --> board_linux
-        board_env -- inc --> board_uboot
+        board_env -. optional inc .-> board_buildroot
+        board_env -. optional inc .-> board_cache
+        board_env -. optional inc .-> board_linux
+        board_env -. optional inc .-> board_uboot
     end
 ```
+
+
+
+# Makefiles target relationship
+
+```mermaid
+flowchart BT
+    subgraph Makefile[~/Makefile]
+        subgraph targets
+            all[all]
+            buildroottarget[buildroot]
+            dependstarget[depends]
+        end
+        subgraph functions
+            buildrootfunction[buildroot]
+        end
+    end
+
+    
+
+    subgraph makeenv[~/make/env.mk]
+        subgraph makeenvfunctions[functions]
+            makeenvdefines[rv1106g-depends]
+        end
+    end
+
+    subgraph buildrootdir[~/source/buildroot/Makefile]
+        subgraph buildrootdirMakefileTargets[targets]
+            buildrootdirMakefileTarget[rv1106g_debug_defconfig]
+        end
+    end
+
+    all -.-> buildroottarget
+    buildroottarget -.-> dependstarget
+    dependstarget --> makeenvdefines
+    buildroottarget --> buildrootfunction
+    buildrootfunction --> buildrootdirMakefileTarget
+
+    buildrootdir ~~~ makeenv
+    
+```
+
+
 
 # Repo Relationship
 
@@ -78,10 +121,6 @@ flowchart TB
 
     rcp-camera --> BOOTABLE
     BOOTABLE[(Bootable Image)]
-
-    
-
-
 
     subgraph rcp-mcu-silabs
         gecko-sdk

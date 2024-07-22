@@ -82,7 +82,7 @@ flowchart BT
     make_functions_buildroot-deps -- $ bash --> scripts_bash_get-source
     make_targets_depends --> board-rv1106g-make_functions_rv1106-deps
     make_targets_buildroot --> make_functions_buildroot
-    make_functions_buildroot -. $ make .-> buildroot-dir_targets_rv1106config
+    make_functions_buildroot -. optional \n $ make .-> buildroot-dir_targets_rv1106config
     make_functions_buildroot -- $ make --> buildroot-dir_targets_all
 
     %%dependsFunc --> makeenvdep

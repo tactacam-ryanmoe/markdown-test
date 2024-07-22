@@ -1,4 +1,5 @@
 # Makefiles relationship
+> [Syntax](https://mermaid.js.org/syntax/flowchart.html)
 
 ```mermaid
 flowchart TB
@@ -47,7 +48,9 @@ flowchart BT
             dependstarget[depends]
         end
         subgraph functions
+            dependsFunc[buildroot-depends]
             buildrootfunction[buildroot]
+            buildrootdependsfunction[buildroot-depends]
         end
     end
 
@@ -55,7 +58,7 @@ flowchart BT
 
     subgraph makeenv[~/make/env.mk]
         subgraph makeenvfunctions[functions]
-            makeenvdefines[rv1106g-depends]
+            makeenvdep[rv1106g-depends]
         end
     end
 
@@ -67,9 +70,10 @@ flowchart BT
 
     all -.-> buildroottarget
     buildroottarget -.-> dependstarget
-    dependstarget --> makeenvdefines
+    dependstarget --> dependsFunc
+    dependsFunc --> makeenvdep
     buildroottarget --> buildrootfunction
-    buildrootfunction --> buildrootdirMakefileTarget
+    buildrootfunction -.-> buildrootdirMakefileTarget
 
     buildrootdir ~~~ makeenv
     

@@ -41,41 +41,55 @@ flowchart TB
 
 ```mermaid
 flowchart BT
-    subgraph Makefile[~/Makefile]
-        subgraph targets
-            all[all]
-            buildroottarget[buildroot]
-            dependstarget[depends]
-        end
-        subgraph functions
-            dependsFunc[buildroot-depends]
-            buildrootfunction[buildroot]
-            buildrootdependsfunction[buildroot-depends]
-        end
-    end
 
-    
-
-    subgraph makeenv[~/make/env.mk]
-        subgraph makeenvfunctions[functions]
-            makeenvdep[rv1106g-depends]
+%% ----- Objects -----
+    subgraph make[~/Makefile]
+        subgraph make_targets[targets]
+            make_targets_all[all]
+            make_targets_buildroot[buildroot]
+            make_targets_depends[depends]
+        end
+        subgraph make_functions[functions]
+            make_functions_buildroot[buildroot]
+            make_functions_buildroot-deps[buildroot-depends]
         end
     end
 
-    subgraph buildrootdir[~/source/buildroot/Makefile]
-        subgraph buildrootdirMakefileTargets[targets]
-            buildrootdirMakefileTarget[rv1106g_debug_defconfig]
+    subgraph scripts[~/scripts]
+        subgraph scripts_bash[bash functions]
+            scripts_bash_get-source[get-source]
         end
     end
 
-    all -.-> buildroottarget
-    buildroottarget -.-> dependstarget
-    dependstarget --> dependsFunc
-    dependsFunc --> makeenvdep
-    buildroottarget --> buildrootfunction
-    buildrootfunction -.-> buildrootdirMakefileTarget
+    subgraph board-rv1106g-make[~/board/rv1106g/make]
+        subgraph board-rv1106g-make_functions[functions]
+            board-rv1106g-make_functions_rv1106-deps[rv1106g-depends]
+        end
+    end
 
-    buildrootdir ~~~ makeenv
+    subgraph buildroot-dir[~/source/buildroot/Makefile]
+        subgraph buildroot-dir_targets[targets]
+            buildroot-dir_targets_rv1106config[rv1106g_debug_defconfig]
+            buildroot-dir_targets_all[all]
+        end
+    end
+
+%% ----- Lines -----
+
+    make_targets_all --> make_targets_buildroot
+    make_targets_buildroot --> make_targets_depends
+    make_targets_depends --> make_functions_buildroot-deps
+    make_functions_buildroot-deps -- $ bash --> scripts_bash_get-source
+    make_targets_depends --> board-rv1106g-make_functions_rv1106-deps
+    make_targets_buildroot --> make_functions_buildroot
+    make_functions_buildroot -. $ make .-> buildroot-dir_targets_rv1106config
+    make_functions_buildroot -- $ make --> buildroot-dir_targets_all
+
+    %%dependsFunc --> makeenvdep
+    %%buildroottarget --> buildrootfunction
+    %%buildrootfunction -.-> buildrootdirMakefileTarget
+
+    %%buildrootdir ~~~ makeenv
     
 ```
 

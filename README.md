@@ -130,7 +130,7 @@ flowchart TB
         end
     end
     
-    TACTACAMSDK[(Tactacam SDK)]
+    TACTACAMSDK[(Library SDK)]
     
     subgraph rcp-camera
         vendor-SDK

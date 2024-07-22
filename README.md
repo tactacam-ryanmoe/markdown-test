@@ -80,11 +80,11 @@ flowchart BT
     %% ----- Lines -----
 
     make_targets_all --> make_targets_buildroot
-    make_targets_buildroot --> make_targets_depends
-    make_targets_depends --> make_functions_buildroot-deps
+    make_targets_buildroot -- 1st path --> make_targets_depends
+    make_targets_depends -- 1st path --> make_functions_buildroot-deps
     make_functions_buildroot-deps -- $ bash --> scripts_bash_get-source
-    make_targets_depends --> board-rv1106g-make_functions_rv1106-deps
-    make_targets_buildroot --> make_functions_buildroot
+    make_targets_depends -- 2nd path --> board-rv1106g-make_functions_rv1106-deps
+    make_targets_buildroot -- 2nd path --> make_functions_buildroot
     make_functions_buildroot -. optional \n $ make .-> buildroot-dir_targets_rv1106config
     make_functions_buildroot -- $ make --> buildroot-dir_targets_all
 

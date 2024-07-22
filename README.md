@@ -72,7 +72,7 @@ flowchart BT
 
     subgraph buildroot-dir[~/source/buildroot/Makefile]
         subgraph buildroot-dir_targets[targets]
-            buildroot-dir_targets_rv1106config[rv1106g_debug_defconfig]
+            buildroot-dir_targets_rv1106config[%_defconfig]
             buildroot-dir_targets_all[all]
         end
     end
@@ -108,12 +108,9 @@ flowchart TB
         rcp-cache
         buildroot
     end
-
-    rcp-bsp --> SDK
+    
     SDK[(arch specific SDK)]
     
-
-    SDK --> rcp-library
     subgraph rcp-library
         subgraph rcp-core
             coreso[.so]
@@ -132,16 +129,13 @@ flowchart TB
             senseexe[exec]
         end
     end
-
-    rcp-library --> TACTACAMSDK
+    
     TACTACAMSDK[(Tactacam SDK)]
-
-    TACTACAMSDK --> rcp-camera
+    
     subgraph rcp-camera
         vendor-SDK
     end
 
-    rcp-camera --> BOOTABLE
     BOOTABLE[(Bootable Image)]
 
     subgraph rcp-mcu-silabs
@@ -149,9 +143,14 @@ flowchart TB
         rcp-cache-silabs
     end
 
-    MCUIMG[(Bootable MCU Img???)]
-    rcp-mcu-silabs --> MCUIMG
+    MCUIMG[(Bootable MCU Img)]
 
     %% ----- Lines -----
+    rcp-bsp --> SDK
+    SDK --> rcp-library
+    rcp-library --> TACTACAMSDK
+    TACTACAMSDK --> rcp-camera
+    rcp-camera --> BOOTABLE
+    rcp-mcu-silabs --> MCUIMG
     
 ```

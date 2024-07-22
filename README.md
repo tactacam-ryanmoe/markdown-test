@@ -3,10 +3,11 @@
 
 ```mermaid
 flowchart TB
+    %% ----- Objects -----
     subgraph rcp-bsp
-        Makefile
+        Makefile[Makefile]
     
-        subgraph make1[~/make/]
+        subgraph make[~/make/]
             make_env[env.mk]
             make_version[version.mk]
             make_custom[custom.mk]
@@ -17,21 +18,23 @@ flowchart TB
         Makefile -. optional inc .-> make_custom
     
         subgraph board[~/board/rv1106g/make/]
-            board_env[env.mk]
-            subgraph source[./source/]
-                board_buildroot[buildroot.mk]
-                board_cache[cache.mk]
-                board_linux[linux.mk]
-                board_uboot[uboot.mk]
+            board_env-mk[env.mk]
+            subgraph board_source[./source/]
+                board_source_buildroot[buildroot.mk]
+                board_source_cache[cache.mk]
+                board_source_linux[linux.mk]
+                board_source_uboot[uboot.mk]
             end
         end
+
+        %% ----- Lines -----
     
-        make_env -- inc --> board_env
+        make_env -- inc --> board_env-mk
     
-        board_env -. optional inc .-> board_buildroot
-        board_env -. optional inc .-> board_cache
-        board_env -. optional inc .-> board_linux
-        board_env -. optional inc .-> board_uboot
+        board_env-mk -. optional inc .-> board_source_buildroot
+        board_env-mk -. optional inc .-> board_source_cache
+        board_env-mk -. optional inc .-> board_source_linux
+        board_env-mk -. optional inc .-> board_source_uboot
     end
 ```
 
@@ -42,7 +45,7 @@ flowchart TB
 ```mermaid
 flowchart BT
 
-%% ----- Objects -----
+    %% ----- Objects -----
     subgraph make[~/Makefile]
         subgraph make_targets[targets]
             make_targets_all[all]
@@ -74,7 +77,7 @@ flowchart BT
         end
     end
 
-%% ----- Lines -----
+    %% ----- Lines -----
 
     make_targets_all --> make_targets_buildroot
     make_targets_buildroot --> make_targets_depends
@@ -100,6 +103,7 @@ flowchart BT
 ```mermaid
 flowchart TB
 
+    %% ----- Objects -----
     subgraph rcp-bsp
         rcp-cache
         buildroot
@@ -147,5 +151,7 @@ flowchart TB
 
     MCUIMG[(Bootable MCU Img???)]
     rcp-mcu-silabs --> MCUIMG
+
+    %% ----- Lines -----
     
 ```
